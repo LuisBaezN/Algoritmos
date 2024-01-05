@@ -1,23 +1,3 @@
-def ciclo_func(func: function, param: list = [], name: str = '') -> None:
-    run = True
-    while run:
-        resp = input(f'\n> Desea calcular la función {name}? (y/n):').lower()[0]
-        if resp == 'y':
-            os.system('cls')
-            print('-'*50)
-            print('>> Ejemplo de funcionalidad:\n\n')
-            func()
-            print('-'*50)
-            inicio = float(input('\n> Ingrese los siguientes datos:\n\n> Número inicial: '))
-            fin = float(input('> Número final: '))
-            incremento = float(input('> Incremento: '))
-            os.system('cls')
-            sum_n(inicio, fin, incremento)
-        elif resp == 'n':
-            run = False
-        else:
-            print('> Opción no válida, escriba la letra Y si desea hacer una sumatoria o la letra N si no es así.')
-
 def sum_n(inicio: float, fin: float, incremento: float) -> None:
     '''
     Muestra la sumatoria dado un rango con su respectivo incremento.
@@ -40,30 +20,39 @@ def sum_n(inicio: float, fin: float, incremento: float) -> None:
         print('> Su sumatoria es imposible de realizar, dado que el número inicial se aleja del número final.')
     elif inicio > fin and incremento > 0:
         print('> Su sumatoria es imposible de realizar, dado que el número final se aleja del número inicial.')
+    elif inicio == fin:
+        print('\n> Su sumatoria es:', inicio)
     else:
-        secuencia = [inicio]
+        suma = inicio
         siguiente = inicio + incremento
         working = True
         while working:
-            secuencia.append(siguiente)
-            siguiente = siguiente + incremento
-            if incremento > 0 and siguiente >= fin:
+            suma += siguiente
+            siguiente += incremento
+            if (incremento > 0) and (siguiente >= fin):
                 if siguiente == fin:
-                    secuencia.append(siguiente)
-                print('\n> Su sumatoria es:', sum(secuencia))
+                    suma += siguiente
+                print('\n> Su sumatoria es:', suma)
                 working = False
-            elif siguiente <= fin:
+            elif (incremento < 0) and (siguiente <= fin):
                 if siguiente == fin:
-                    secuencia.append(siguiente)
-                print('\n> Su sumatoria es:', sum(secuencia))
+                    suma += siguiente
+                print('\n> Su sumatoria es:', suma)
                 working = False
+
+def max_min_3(num_1: float, num_2: float, num_3: float) -> list:
+    if num_1 == num_2 and num_2 == num_3:
+        return num_1, num_1
+    elif num_1 < num_2 and num_2 < num_3:
+        return num_1, num_3
+    
 
 if __name__ == '__main__':
     import os
     
     os.system('cls')
-    run = True
-    while run:
+    run = [False, True]
+    while run[0]:
         resp = input('\n> Desea calcular una sumatoria? (y/n):').lower()[0]
         if resp == 'y':
             os.system('cls')
@@ -77,6 +66,22 @@ if __name__ == '__main__':
             os.system('cls')
             sum_n(inicio, fin, incremento)
         elif resp == 'n':
-            run = False
+            run[0] = False
+        else:
+            print('> Opción no válida, escriba la letra Y si desea hacer una sumatoria o la letra N si no es así.')
+    
+    while run[1]:
+        resp = input('\n> Desea encontrar el número menor y mayor en un grupo de 3 números? (y/n):').lower()[0]
+        if resp == 'y':
+            os.system('cls')
+            print('-'*50)
+            print('>> Ejemplo de funcionalidad:\n\n')
+            #sum_n(50.0, 70.0, 5.0)
+            print('-'*50)
+            # Datos
+            os.system('cls')
+            #sum_n(inicio, fin, incremento)
+        elif resp == 'n':
+            run[1] = False
         else:
             print('> Opción no válida, escriba la letra Y si desea hacer una sumatoria o la letra N si no es así.')
