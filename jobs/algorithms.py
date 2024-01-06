@@ -145,6 +145,8 @@ def mean_alumn(test: bool = False, datos: list = []) -> float:
     '''
     if test:
         import time
+        print('> Prueba de escritorio en progreso...')
+        time.sleep(3)
         i = 0
     loop_alumno = True
     materias = 0
@@ -167,7 +169,7 @@ def mean_alumn(test: bool = False, datos: list = []) -> float:
                 print('> El promedio del alumno es:', prom)
                 if test:
                     print('> Datos ingresados:', datos)
-                    print('> El siguiente promedio será evaluado en breve...')
+                    print('\n> El siguiente promedio será evaluado en breve...')
                     time.sleep(7)
                 return prom
             else:
