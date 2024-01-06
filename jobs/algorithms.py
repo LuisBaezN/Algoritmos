@@ -81,7 +81,7 @@ def max_min_n(test: bool = False, datos: list = ['-1','0','1','Fin']) -> list:
     maximo = -float('inf')
     loop = True
     while loop:
-        print('> Para terminar la captura, ingrese la letra f en lugar del número.')
+        
         if test:
             number = datos[i]
             i += 1
@@ -101,17 +101,103 @@ def max_min_n(test: bool = False, datos: list = ['-1','0','1','Fin']) -> list:
                 print(e)
     return minimo, maximo
 
+def mean_group(test: bool = False, datos: list = []) -> None:
+    '''
+    Calcula la califiación media de cada alumno y la media del grupo, junto con el número de materias y alumnos.
+    '''
+    if test:
+        long = len(datos)
+    loop_grupo = True
+    alumnos = 0
+    sum_grup = 0
+    while loop_grupo:
+        if test:
+            if long > 0:
+                resp = 'y'
+            else:
+                resp = 'n'
+        else:
+            resp = input('> Desea calcular el promedio de un alumno? (y/n): ')
+        os.system('cls')
+        if len(resp) == 0:
+            print('No ingresó una opción.')
+        elif resp.lower()[0] == 'n':
+            loop_grupo = False
+            print('> Número de alumnos:', alumnos)
+            if alumnos > 0:
+                print('> El promedio del grupo es:', sum_grup/alumnos)
+            else:
+                print('> No es posible calcular el promedio de un grupo con cero alumnos.')
+        elif resp.lower()[0] == 'y':
+            if test:
+                result = mean_alumn(True, datos[0])
+                datos.pop(0)
+                long = len(datos)
+            else:
+                result = mean_alumn()
+            if result != -1:
+                sum_grup += result
+                alumnos += 1        
+
+def mean_alumn(test: bool = False, datos: list = []) -> float:
+    '''
+    Calcula la califiación media de un alumno y el número de materias.
+    '''
+    if test:
+        import time
+        i = 0
+    loop_alumno = True
+    materias = 0
+    sum_alum = 0
+    while loop_alumno:
+        print('> Para terminar la captura, ingrese la letra f en lugar del número.')
+        if test:
+            calif = datos[i]
+            i += 1
+        else:
+            calif = input('> Ingrese la calificación: ')
+        os.system('cls')
+        if len(calif) == 0:
+            print('No ingresó una calificación.')
+        elif calif.lower()[0] == 'f':
+            loop_alumno = False
+            print('> El número de materias evaluadas son:', materias)
+            if materias > 0:
+                prom = sum_alum/materias
+                print('> El promedio del alumno es:', prom)
+                if test:
+                    print('> Datos ingresados:', datos)
+                    print('> El siguiente promedio será evaluado en breve...')
+                    time.sleep(7)
+                return prom
+            else:
+                print('> El alumno no tiene un promedio.')
+                return -1
+        else:
+            try:
+                calif = float(calif)
+                if calif < 0:
+                    print('> Ha ingresado un número negativo.')
+                elif calif > 10:
+                    print('> Ha ingresado una calificación fuera del rango.')
+                else:
+                    sum_alum += calif
+                    materias += 1
+            except Exception as e:
+                print(e)
 
 if __name__ == '__main__':
     import os
     
     os.system('cls')
-    run = [0, 0, 1]
+    run = [1, 1, 1, 1]
 
     # Primer algoritmo
     while run[0]:
-        resp = input('\n> Desea calcular una sumatoria? (y/n):').lower()[0]
-        if resp == 'y':
+        resp = input('\n> Desea calcular una sumatoria? (y/n):').lower()
+        if len(resp) == 0:
+            print('No ingresó una opción.')
+        elif resp[0] == 'y':
             os.system('cls')
             print('-'*50)
             print('>> Ejemplo de funcionalidad:\n\n')
@@ -129,8 +215,10 @@ if __name__ == '__main__':
     
     # Segundo algoritmo
     while run[1]:
-        resp = input('\n> Desea encontrar el número menor y mayor en un grupo de 3 números? (y/n):').lower()[0]
-        if resp == 'y':
+        resp = input('\n> Desea encontrar el número menor y mayor en un grupo de 3 números? (y/n):').lower()
+        if len(resp) == 0:
+            print('No ingresó una opción.')
+        elif resp[0] == 'y':
             os.system('cls')
             print('-'*50)
             print('>> Ejemplo de funcionalidad:\n\n')
@@ -149,8 +237,11 @@ if __name__ == '__main__':
     
     # Tercer algoritmo
     while run[2]:
-        resp = input('\n> Desea encontrar el número menor y mayor en un grupo de números? (y/n):').lower()[0]
-        if resp == 'y':
+        resp = input('\n> Desea encontrar el número menor y mayor en un grupo de números? (y/n):').lower()
+
+        if len(resp) == 0:
+            print('No ingresó una opción.')
+        elif resp[0] == 'y':
             os.system('cls')
             datos = ['-2','34','2','12','-67','45','89','72','f']
             results = max_min_n(True, datos)
@@ -165,6 +256,24 @@ if __name__ == '__main__':
             print(f'> Número mínimo: {results[0]}\n> Número máximo: {results[1]}')
         elif resp == 'n':
             run[2] = False
+        else:
+            print('> Opción no válida, escriba la letra Y si desea hacer una sumatoria o la letra N si no es así.')
+
+    # Cuarto algoritmo
+    while run[3]:
+        resp = input('\n> Desea calcular el promedio de un grupo de alumnos? (y/n):').lower()
+
+        if len(resp) == 0:
+            print('No ingresó una opción.')
+        elif resp[0] == 'y':
+            os.system('cls')
+            datos = [['-2','34','2','12','-67','45','89','72','f'], ['9', '10', '10','f']]
+            mean_group(True, datos)
+            print('-'*50)
+            # Datos
+            mean_group()
+        elif resp == 'n':
+            run[3] = False
         else:
             print('> Opción no válida, escriba la letra Y si desea hacer una sumatoria o la letra N si no es así.')
 
